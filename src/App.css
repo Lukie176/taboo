@@ -1,38 +1,232 @@
+/*Application-wide styles*/
 .App {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
+main {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
-.App-link {
-  color: #61dafb;
+/*Header styles*/
+.header {
+  display: inline-flex;
+  width: 100%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.teamName {
+  display: inline-flex;
+}
+
+/*Score styles*/
+.score {
+  width: 20%;
+  height: 10%;
+  background-color: #171332;
+}
+
+.score h4 {
+  margin: 5px;
+}
+
+.team1 {
+  border-radius: 0px 0px 25px 0px;
+}
+
+.team2 {
+  border-radius: 0px 0px 0px 25px;
+}
+
+/*Timer styles*/
+.time {
+  font-size: 3rem;
+  width: 60%;
+  display: inline-block;
+}
+
+.time h3 {
+  margin: 0;
+  display: inline-block;
+  vertical-align:middle;
+}
+
+.timer {
+  width: 3rem;
+  height: 3rem;
+  margin-left: 10px;
+}
+
+.icon-start{
+  background: url(./assets/play-solid.svg) no-repeat center;
+}
+
+.icon-pause{
+  background: url(./assets/pause-solid.svg) no-repeat center;
+}
+
+.icon-reset{
+  background: url(./assets/undo-alt-solid.svg) no-repeat center;
+}
+
+/*Taboo Card styles*/
+.cardDiv {
+  width: 600px;
+  margin: auto;
+  border-radius: 25px;
+}
+
+@media (max-width: 750px) {
+  .cardDiv {
+    width: 80%;
   }
-  to {
-    transform: rotate(360deg);
+}
+
+.guessWord {
+  padding: 10px 20px;
+  color: #FFFFFF;
+  background: #F26970;
+  text-align: center;
+  text-transform: uppercase;
+  line-height: 2.5em;
+  font-size: 1.3em;
+  margin: 0px;
+  border-radius: 25px 25px 0px 0px;
+}
+
+.tabooWords {
+  border: 4px solid #F26970;
+  border-radius: 0px 0px 25px 25px;
+  margin: 0;
+  background: #FFFFFF;
+  line-height: 2.5em;
+  display: block;
+  padding: 15px 10px;
+  text-align: center;
+  color: #333;
+  font-size: 1.2em;
+  text-transform: capitalize;
+}  
+
+li {
+  list-style-type: none;
+}
+
+/*Button styles*/
+.buttonGroup {
+  display: inline;
+  padding-top:20px;
+  width: 600px;
+  margin: auto;
+}
+
+@media (max-width: 750px) {
+  .buttonGroup {
+    width: 80%;
   }
+}
+
+.middle {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.actions {
+  width:30%;
+  height:100px;
+}
+
+.icon {
+  background-size: contain;
+  cursor: pointer;
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+}
+
+.icon-correct{
+  background: url(./assets/check-solid.svg) no-repeat center;
+}
+
+.icon-wrong{
+  background: url(./assets/times-solid.svg) no-repeat center;
+}
+
+.icon-pass{
+  background: url(./assets/forward-solid.svg) no-repeat center;
+}
+
+.btn{
+  display:inline-block;
+  font-weight:400;
+  color:#212529;
+  text-align:center;
+  vertical-align:middle;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+  background-color:transparent;
+  border:1px solid transparent;
+  padding:.375rem .75rem;
+  font-size:1rem;
+  line-height:1.5;
+  border-radius:.25rem;
+  transition:color .15s ease-in-out,
+  background-color .15s ease-in-out,
+  border-color .15s ease-in-out,
+  box-shadow .15s ease-in-out;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion:reduce){
+  .btn{transition:none}
+}
+
+.btn:hover{
+  color:#212529;
+  text-decoration:none
+}
+
+.btn.focus,.btn:focus{
+  outline:0;
+}
+
+.btn-correct{
+  color:#fff;
+  background-color:#28a745;
+  border-color:#28a745;
+}
+
+.btn-correct:hover{
+  color:#fff;
+  background-color:#218838;
+  border-color:#1e7e34;
+}
+
+.btn-wrong{
+  color:#fff;
+  background-color:#dc3545;
+  border-color:#dc3545;
+}
+
+.btn-wrong:hover{
+  color:#fff;
+  background-color:#c82333;
+  border-color:#bd2130;
+}
+
+.btn-pass{
+  color:#212529;
+  background-color:#ffc107;
+  border-color:#ffc107;
+}
+
+.btn-pass:hover{
+  color:#212529;
+  background-color:#e0a800;
+  border-color:#d39e00;
 }
