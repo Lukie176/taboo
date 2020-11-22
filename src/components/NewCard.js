@@ -4,7 +4,6 @@ import db from '../Firebase';
 export default class NewCard extends React.Component {
   constructor(props) {
     super(props);
-
     // State stores words to enter into Firebase
     this.state = {
       guess_word: "",
