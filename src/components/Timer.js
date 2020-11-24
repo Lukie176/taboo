@@ -32,10 +32,10 @@ export default function Timer(){
   return (
     <div className="time">
       <h3>{seconds}s</h3>
-      <button className={isActive ? 'btn timer btn-pass' : 'btn timer btn-correct'} onClick={toggle}>
+      <button className={isActive ? 'btn timer btn-warning' : 'btn timer btn-success'} onClick={toggle}>
         <span className={isActive ? 'icon icon-pause' : 'icon icon-start'}></span>
       </button>
-      <button className="btn timer btn-wrong" onClick={reset}>
+      <button className="btn timer btn-danger" onClick={reset}>
         <span className="icon icon-reset"></span>
       </button> 
     </div>

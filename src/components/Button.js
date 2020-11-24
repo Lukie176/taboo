@@ -1,7 +1,7 @@
 import db from '../Firebase';
 
 export default function Button(props) {
-  const classText = "btn actions btn-" + props.text + ((props.text === "pass") ? " middle" : "");
+  const classText = "btn actions btn-" + props.text + ((props.text === "warning") ? " middle" : "");
   const iconClass = "icon icon-" + props.text;
 
   function logResponse(){
@@ -20,9 +20,9 @@ export default function Button(props) {
     db.ref('/games/' + props.game + '/scores/team' + props.team).once('value').then(snapshot => {
       // Determine change in score depending on action
       let delta = 0;
-      if (props.text === "correct") {
+      if (props.text === "success") {
         delta = 1;
-      } else if (props.text === "wrong") {
+      } else if (props.text === "danger") {
         delta = -1;
       }
 
