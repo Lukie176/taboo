@@ -5,12 +5,12 @@ import {
   Route
 } from "react-router-dom";
 
-import Navigation from "./components/Navigation"
-import Home from "./components/Home"
-import NewGame from "./components/NewGame"
-import JoinGame from "./components/JoinGame"
-import About from "./components/About"
-import NewCard from "./components/NewCard"
+import Navigation from "./components/Navigation";
+import Home from "./components/Home";
+import NewGame from "./components/NewGame";
+import JoinGame from "./components/JoinGame";
+import NewCard from "./components/NewCard";
+import Play from "./components/Play";
 
 import './App.css';
 
@@ -23,18 +23,10 @@ export default function App() {
         <main>
           <Switch>
             <Route path={["/join/:joinCode", "/join"]} component={JoinGame} />
-            <Route path="/about">
-              <About />
-            </Route>
-            <Route path="/newcard">
-              <NewCard />
-            </Route>
-            <Route path="/new">
-              <NewGame />
-            </Route>
-            <Route path="/">
-              <Home />
-            </Route>
+            <Route path="/new" component={NewGame} />
+            <Route path="/play" component={Play} />
+            <Route path="/newcard" component={NewCard} />
+            <Route path="/" component={Home} />
           </Switch>
         </main>
       </Router>

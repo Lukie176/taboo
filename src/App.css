@@ -2,8 +2,9 @@
 .App {
   text-align: center;
   min-height: 100vh;
-  background-color: #282c34;
+  background-color: #282828;
   color: white;
+  display: block;
 }
 
 .content {
@@ -11,27 +12,59 @@
   flex-direction: column;
   align-items: center;  
 }
+
 /* Navbar styles */
-.topnav {
-  background-color: #333;
+.navbar {
+  background-color: #4F517D;
 }
 
-nav a {
-  color: white !important;
-}
-
+/*Content body styles*/
 main {
-  padding-top: 55px;
+  padding-top: 56px;
 }
 
-/*Header styles*/
+.oneButtonBody {
+  min-height: calc(100vh - 84px - 56px);
+  width:100%;
+}
+
+.twoButtonBody {
+  min-height: calc(100vh - 168px - 56px);
+}
+  
+h1, h2 {
+  padding:30px;
+}
+
+li {
+  list-style-type: none;
+}
+
+ul {
+  padding: 0px;
+}
+
+hr {
+  background-color: white;
+  width:60%;
+}
+
+.twoButtonBody p {
+  padding: 5%;
+}
+
+.reviewNext h4 {
+  padding: 20px;
+}
+
+/* Game Header styles */
 .header {
   justify-content: space-between;
   display: inline-flex;
   width: 100%;
 }
 
-/*Score styles*/
+/* Score styles */
 .score {
   width: 25%;
   height: 10%;
@@ -84,7 +117,7 @@ main {
 .cardDiv {
   width: 600px;
   margin: auto;
-  margin-top:5%;
+  margin-top:10px;
   border-radius: 25px;
   text-align: center;
 }
@@ -119,16 +152,12 @@ main {
   text-transform: capitalize;
 }  
 
-li {
-  list-style-type: none;
-}
-
 /*Button styles*/
 .buttonGroup {
   display: inline;
   padding-top:20px;
+  padding-bottom:10px;
   width: 600px;
-  margin: auto;
 }
 
 @media (max-width: 750px) {
@@ -137,14 +166,22 @@ li {
   }
 }
 
-.middle {
-  margin-left: 5%;
-  margin-right: 5%;
+.buzzer {
+  width: 100%;
+  height: 75px;
+}
+
+.buttonGroup .btn-success {
+  margin-left: 2%;
+}
+
+.buttonGroup .btn-danger {
+  margin-right: 2%;
 }
 
 .actions {
-  width:30%;
-  height:100px;
+  width:48%;
+  height:75px;
 }
 
 .icon {
@@ -156,6 +193,7 @@ li {
 }
 
 .icon-success{
+  padding-left: 50px;
   background: url(./assets/check-solid.svg) no-repeat center;
 }
 
@@ -163,16 +201,8 @@ li {
   background: url(./assets/times-solid.svg) no-repeat center;
 }
 
-.icon-warning{
-  background: url(./assets/forward-solid.svg) no-repeat center;
-}
-
 .btn.focus,.btn:focus{
   outline:0;
-}
-
-.joinDiv {
-  min-height:0vh;
 }
 
 .joinDiv h1 {
@@ -192,28 +222,24 @@ li {
   outline: none;
 }
 
+
+.nameField, .nameField:focus {
+  text-align: center;
+  height: 1.5em;
+  width: min(7em, 80vw);
+  font-size: 80px;
+  padding:0.3em;
+  border-radius:20px;
+  margin-top: 30px;
+  outline: none;
+}
+
 .mainButton {
-  background-color: #333333 !important;
+  background-color: #4F517D !important;
   color: white !important;
   font-size: 40px !important;
-  width: calc(100% - 20px);
-  position:fixed;
-  right:10px;
-}
-
-.mainButton:hover {
-  background-color: #404040 !important;
-  color: white !important;
-}
-
-
-
-.joinButton {
-  bottom: 10px;
-}
-
-.joinButton2 {
-  bottom: 90px;
+  width: calc(100vw - 20px);
+  margin-bottom: 10px !important;
 }
 
 .newGameDiv h1{
@@ -232,10 +258,6 @@ li {
   width:90vw;
 }
 
-ul {
-  padding:0;
-}
-
 .players li{
   font-size: 30px;
   padding:0;
@@ -243,16 +265,10 @@ ul {
   width:45vw;
   text-align:center;
 }
-
-.newGameDiv h2 {
-  padding:30px;
+.players h2{
+  width:45vw;
+  text-align:center;
 }
-
-hr {
-  background-color: white;
-  width:60%;
-}
-
 .teamHeader {
   font-size: 40px;
   font-weight:700;

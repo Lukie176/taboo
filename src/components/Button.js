@@ -1,10 +1,13 @@
 import db from '../Firebase';
 
 export default function Button(props) {
-  const classText = "btn actions btn-" + props.text + ((props.text === "warning") ? " middle" : "");
+  const classText = "btn actions btn-" + props.text;
   const iconClass = "icon icon-" + props.text;
 
   function logResponse(){
+    let category = ((props.text === "success") ? "guessed" : "discarded");
+
+    db.ref('/games/' + props.game + '/results/' + props.word).set({category: category});
     // Fetch number of words to randomly select next word
     db.ref('/word_count').once('value').then(snapshot => {
       // Randomly select an index in words array
@@ -19,12 +22,7 @@ export default function Button(props) {
 
     db.ref('/games/' + props.game + '/scores/team' + props.team).once('value').then(snapshot => {
       // Determine change in score depending on action
-      let delta = 0;
-      if (props.text === "success") {
-        delta = 1;
-      } else if (props.text === "danger") {
-        delta = -1;
-      }
+      let delta = ((props.text === "success") ? 1 : -1);
 
       // Update score in Firebase
       db.ref('/games/' + props.game + '/scores/team' + props.team).set(snapshot.val() + delta);
