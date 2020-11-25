@@ -1,3 +1,5 @@
+import ListItem from './ListItem';
+
 export default function TeamList(props) {
   let res = [];
 
@@ -6,11 +8,17 @@ export default function TeamList(props) {
     let dataKeys = Object.keys(props.data);
     for (let i = 0; i < dataValues.length; i++) {
       if (dataValues[i].category === props.label) {
-        res.push(<li key={dataKeys[i]}>{dataKeys[i]}</li>)
+        console.log(props.toggle);
+        if (props.toggle) {
+          res.push(<ListItem key={dataKeys[i]} name={dataKeys[i]} gameid={props.gameid} team={dataValues[i].category} />);
+        } else {
+          res.push(<li key={dataKeys[i]}>{dataKeys[i]}</li>);
+        }
       }
     }
   }
   
+
   if (props.data != null) {
     return (
       <ul>
