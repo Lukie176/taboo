@@ -78,7 +78,9 @@ export default class JoinGame extends React.Component {
                 autoFocus={true} />
               <br />
             </div>
-            <button type="submit" className="btn mainButton">Join Game</button>
+            <div className="footerButtons">
+              <button type="submit" className="mainButton">Join Game</button>
+            </div>
           </form>
         </div>
       );

@@ -40,7 +40,6 @@ export default class NewGame extends React.Component {
         } else {
           this.setState({valid: true});
           let initObj = {
-            active_team: 1,
             scores: {team1: 0, team2: 0}
           };
 

@@ -67,13 +67,16 @@ export default class Name extends React.Component {
               className="nameField"
               name="name"
               type="text" 
+              minLength="1"
               autoComplete="off"
               value={this.state.name} 
               onChange={this.handleChange}
               autoFocus={true} />
             <br />
             </div>
-            <button type="submit" className="btn mainButton">Continue</button>
+            <div className="footerButtons">
+              <button type="submit" className="mainButton">Continue</button>
+            </div>
           </form>
         </div>);
     } else {

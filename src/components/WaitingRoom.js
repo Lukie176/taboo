@@ -29,7 +29,7 @@ export default class NewGame extends React.Component {
           pathname: '/play',
           state: {
             name: this.props.name,
-            team: this.props.team,
+            team: this.state.players[this.props.name].category,
             gameid: this.props.gameid
           }
         });
@@ -39,15 +39,12 @@ export default class NewGame extends React.Component {
 
   startGame() {
     db.ref('/games/' + this.props.gameid + '/players/').once('value', (snapshot) => {
-      let snapList = Object.values(snapshot.val());
-      let teamCount = [0, 0];
-      snapList.forEach(d => teamCount[d - 1]++);
-
-      if (teamCount[0] > -1 && teamCount[1] > -1) {
-        db.ref('/games/' + this.props.gameid).update({review: true});
-      } else {
-        this.setState({attempted: true});
+      let snapVals = Object.values(snapshot.val());
+      let teamExists = [false, false];
+      for (let i = 0; i < snapVals.length; i++) {
+        teamExists[snapVals[i].category - 1] = true;
       }
+      db.ref('/games/' + this.props.gameid).update({review: true, prev_player: {0: 0, 1: 0},  oneTeam: !(teamExists[0] && teamExists[1])});
     })
   }
 
@@ -56,7 +53,7 @@ export default class NewGame extends React.Component {
   }
 
   render() {
-    const startLink = ((this.props.name === this.state.creator) ? <button type="submit" className="btn mainButton" onClick={this.startGame}>Start Game</button> : null);
+    const startLink = ((this.props.name === this.state.creator) ? <button type="submit" className="mainButton" onClick={this.startGame}>Start Game</button> : null);
     let teamNotice = ((this.state.attempted) ? <span><br/>Each team must have at least one player</span> : null);
 
     return(
@@ -71,7 +68,9 @@ export default class NewGame extends React.Component {
           <TeamList gameid={this.props.gameid} label={2} header="Team 2" data={this.state.players} toggle={true} />
         </div>
       </div>
-      {startLink}
+      <div className="footerButtons">
+        {startLink}
+      </div>
     </div>
   )
   }

@@ -10,12 +10,12 @@ export default function OpposingPlayer (props) {
         <div className="header">
           <Score 
                  score={props.scores.team1} 
-                 active={(props.active_team.category === 1) ? true : false} 
+                 active={(props.active_team === 1) ? true : false} 
                  team="1" />
           <Timer />
           <Score 
                  score={props.scores.team2} 
-                 active={(props.active_team.category === 2) ? true : false} 
+                 active={(props.active_team === 2) ? true : false} 
                  team="2" />
         </div>
         <Card words={props.words} />

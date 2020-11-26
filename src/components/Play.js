@@ -15,26 +15,13 @@ export default class Play extends React.Component {
 
     // State stores current score to display
     this.state = {
-      buzzer: false,
-      creator: this.props.location.state.name,
+      fetching: true,
       name: this.props.location.state.name,
       gameid: this.props.location.state.gameid,
       team: this.props.location.state.team,
+      oneTeam: true,
       review: true,
-      active_player: "",
-      active_team: 1,
-      scores: {
-        team1: 0,
-        team2: 0
-      },
-      words: {
-        guess_word: " ",
-        taboo_word1: " ",
-        taboo_word2: " ",
-        taboo_word3: " ",
-        taboo_word4: " ",
-        taboo_word5: " "
-      }
+      active_player: ""
     };
   }
 
@@ -43,6 +30,7 @@ export default class Play extends React.Component {
     this.gameRef = db.ref('/games/' + this.state.gameid);
     this.gameListener = this.gameRef.on('value', snapshot => {
       this.setState(snapshot.val());
+      this.setState({fetching: false});
     });
   }
 
@@ -51,11 +39,13 @@ export default class Play extends React.Component {
   }
 
   render() {
-    if (this.state.review) {
+    if (this.state.fetching) {
+      return null
+    } else if (this.state.review) {
       return (<Review {...this.state} />)
     } else if (this.state.active_player === this.state.name) {
       return (<ActivePlayer {...this.state} />)
-    } else if (this.state.active_team.category === this.state.team) {
+    } else if (this.state.active_team === this.state.team || this.state.oneTeam) {
       return (<GuessingPlayer {...this.state} />)
     } else {
       return (<OpposingPlayer {...this.state} />)
