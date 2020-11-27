@@ -4,7 +4,7 @@ Taboo is an online port of the popular tabletop word game Taboo, allowing users 
 
 It is assumed that the players in a game are connected through some form of voice/video chat using a different application (such as Zoom, Discord, etc.).
 
-Taboo is currently hosted at [lukesorensen.dev](lukesorensen.dev).
+Taboo is currently hosted at [https://lukesorensen.dev](https://lukesorensen.dev).
 
 ## Background Information
 This web application is entirely server-less and is designed using a React.js frontend. It uses a Firebase Realtime Database to maintain game data and store all sets of guess/taboo words. 
