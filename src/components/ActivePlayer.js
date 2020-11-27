@@ -1,7 +1,7 @@
-import Card from './Card.js';
-import Button from './Button.js';
-import Timer from './Timer.js';
-import Score from './Score.js';
+import Card from './Card';
+import Button from './Button';
+import Timer from './Timer';
+import Score from './Score';
 import db from '../Firebase';
 
 export default function ActivePlayer (props) {
@@ -10,7 +10,7 @@ export default function ActivePlayer (props) {
   }
 
   return (
-    <div style={(props.buzzer) ? {backgroundColor: "#e0a800"} : {}}>
+    <div style={(props.buzzer) ? {backgroundColor: "white"} : {}}>
       <div className="oneButtonBody">
         <div className="content">
           <div className="header">

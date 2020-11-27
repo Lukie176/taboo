@@ -1,71 +1,89 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Taboo
+Taboo is an online port of the popular tabletop word game Taboo, allowing users to play the game online with friends across the world.
 
-## Available Scripts
+It is assumed that the players in a game are connected through some form of voice/video chat using a different application (such as Zoom, Discord, etc.).
 
-In the project directory, you can run:
+Taboo is currently hosted at [lukesorensen.dev](lukesorensen.dev).
 
-### `npm start`
+## Background Information
+This web application is entirely server-less and is designed using a React.js frontend. It uses a Firebase Realtime Database to maintain game data and store all sets of guess/taboo words. 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+If you encounter any bugs while playing, please inform me of them at lukesorensen@college.harard.edu.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Gameplay
 
-### `npm test`
+### Game Setup
+Players are divided into two teams, with one team referred to as Team 1 and the other team referred to as Team 2.  
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Before each round, a player from either Team 1 or Team 2 is selected to be the Clue-giver. The rest of the players on the Clue-giver's team are Guessers, and members of the opposing team are Watchdogs.
 
-### `npm run build`
+When the round begins, the Clue-giver will be given a clue card. Clue cards have the guess word on the top of the card and the taboo words listed below the guess word. When all players are ready, the Clue-giver starts a 60 second timer. The Clue-giver must get their team to say the guess-word on the card without using one of the taboo words in one of their clues. If a taboo word is used, then the opposing team must tap the buzzer which penalizes the guessing team by discarding the current card and removing a point.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Play is continued until time runs out. Each time a teammate successfully guesses a clue-word, a new card is drawn and the guessing team receives a point.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Gameplay and Scoring
+The team not giving clues must watch for Taboos or other violations of the rules. If they successfully spot a rule being broken, they may use their buzzer to interrupt play and very briefly explain the infraction. Clue-givers must discard the current card and will be given a new card. Each card in the discard pile represents a point lost by the guessing team. Once time runs out, the teams are swapped and roles are reversed. In this version of the game, play continues indefinitely. Players may choose to end the game at any time and start a new one by simply leaving the current game lobby and creating a new one.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Rules
+1. Clue-givers may not use any taboo words, including abbreviations and any part of the taboo word.  
+2. Clue-givers may not use sound effects or use gestures to indicate the clue word.  
+3. Clue-givers may pass on any card at any time, but the card is then placed in the discard pile.  
+4. When time is called, the final card does not go into the discard pile, but is instead removed from play.
 
-### `npm run eject`
+### Scoring
+Every card guessed successfully represents a point gained by the guessing-team.  
+Every card discarded represents a point lost by the guessing-team.  
+The final card in play when time runs out is worth no points.  
+At the end of play, points are tallied for each team, the winner is declared by the team with the most points.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Creating a Game
+### Setup (/new)
+To create a game, select "New Game" either in the navigation bar or by the link at the bottom of the home page.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+You will be prompted to enter a name. This name must only be unique to the other player names in your lobby and must be at least one character long. Select "Continue" when you have entered your name.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+You will then be placed in the Waiting Room and be prompted with a 4-character game code. Share this game code with whomever you will be playing with.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+As the game creator, only you have the ability to start the game and start subsequent rounds.
 
-## Learn More
+## Joining a Game
+### Setup (/join)
+To join a game, take note of the game code given to you and select "Join Game" from either the navigation bar or the link at the bottom of the homepage. Enter the game code in the given text box and select "Join Game"
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Alternatively, you may also place the game code at the end of the join URL (ex. `lukesorensen.dev/join/ABCD`).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+You will be prompted to enter a name. This name must only be unique to the other player names in your lobby and must be at least one character long. Select "Continue" when you have entered your name.
 
-### Code Splitting
+You will then be placed in the Waiting Room.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Waiting Room 
+### Changing Teams
+While you wait for everyone to join, you may switch teams by selecting your name.
 
-### Analyzing the Bundle Size
+### Game Modes
+**Team Play**
+Setup: At least 2 players on each team
+This is how Taboo is typically played. Each team must have at least 2 players so that when a team is playing, they will have both a Clue-giver and a Guesser.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+**Local Play**
+Setup: Only 1 player in the entire lobby
+If you would like to only use one device, such as if all players are physically present, only the game creator should join the game and should immediately start the game. Teams will still switch for each round, but the only player will be provided with the clues each round.
 
-### Making a Progressive Web App
+**Free for All**
+Setup: All players on the same team
+All players should join the same team for this game mode. The Clue-giver role will change each round, but all other players will be Guessers. Individual scores will need to be kept separately and the Team Scores should be ignored.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Playing the Game
+### Clue-Giver
+The Clue-Giver is given a digital card with the guess-word and five taboo-words, a 60 second timer (that is not synchronized across players), the current scores, buttons to indicate that the word was either discarded or guessed correctly, and a button to end the round.
 
-### Advanced Configuration
+When a Watchdog buzzes to indicate that a taboo word was used, the background of the Clue-Giver's interface will become white.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Only the current Clue-Giver has the ability to end the round.
 
-### Deployment
+### Guesser
+The Guesser has no access to the words and must guess the guess-word using the clues given to them.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-"# taboo" 
+### Watchdog
+The Watchdog is also given the digital card with the current guess-word and five taboo-words, a 60 second timer (that is not synchronized across players), the current scores, and a button to indicate that the Clue-giver has said a taboo word.

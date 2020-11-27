@@ -28,31 +28,32 @@ export default class Name extends React.Component {
   handleSubmit(event) {
     // Prevent form from submitting HTTP request
     event.preventDefault();
+    if (this.state.name.length > 0) {
+      db.ref('/games/' + this.props.gameid + '/players').once('value', (snapshot) => {
+        let snapObj = snapshot.val();
 
-    db.ref('/games/' + this.props.gameid + '/players').once('value', (snapshot) => {
-      let snapObj = snapshot.val();
+        let playerTeam = 1;
 
-      let playerTeam = 1;
-
-      // If name is unused, add it to the least populated team (default team1)
-      if (!(snapshot.exists()) || !(this.state.name in snapshot.val())) {
-        if (!(snapshot.exists())) {
-          // No names exist, so must be creator, player to team1
-          db.ref('/games/' + this.props.gameid).update({creator: this.state.name});
-        } else if (!(this.state.name in snapshot.val())) {
-          // Names exist, but no duplicates; add to smallest team
-          let teamsArray = Object.values(snapObj);
-          let teamCount = [0, 0]
-          teamsArray.forEach(playerTeam => teamCount[playerTeam.category - 1]++)
-          playerTeam = ((teamCount[0] > teamCount[1]) ? 2 : 1)
+        // If name is unused, add it to the least populated team (default team1)
+        if (!(snapshot.exists()) || !(this.state.name in snapshot.val())) {
+          if (!(snapshot.exists())) {
+            // No names exist, so must be creator, player to team1
+            db.ref('/games/' + this.props.gameid).update({creator: this.state.name});
+          } else if (!(this.state.name in snapshot.val())) {
+            // Names exist, but no duplicates; add to smallest team
+            let teamsArray = Object.values(snapObj);
+            let teamCount = [0, 0]
+            teamsArray.forEach(playerTeam => teamCount[playerTeam.category - 1]++)
+            playerTeam = ((teamCount[0] > teamCount[1]) ? 2 : 1)
+          }
+          db.ref('/games/' + this.props.gameid + '/players/' + this.state.name).set({category: playerTeam});
+          this.setState({team: playerTeam, valid: true});
         }
-        db.ref('/games/' + this.props.gameid + '/players/' + this.state.name).set({category: playerTeam});
-        this.setState({team: playerTeam, valid: true});
-      }
-      
-      // If name is not valid, DOM renders name conflict.
-      this.setState({attempted: true});
-    });
+      });
+    }
+    
+    // If name is not valid, DOM renders name conflict.
+    this.setState({attempted: true});
   }
 
   render() {
@@ -62,7 +63,7 @@ export default class Name extends React.Component {
           <form className="joinForm" onSubmit={this.handleSubmit}>
             <div className="oneButtonBody">
             <h1>Name</h1>
-            {(this.state.attempted) ? <p>Name already in use.</p> : null}
+            {(this.state.attempted) ? <p>Please choose a different name.</p> : null}
             <input
               className="nameField"
               name="name"
