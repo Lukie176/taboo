@@ -1,7 +1,8 @@
-import db from '../Firebase';
 import React from 'react';
+import db from '../Firebase';
 import TeamList from './TeamList';
 
+// Class component so function executes only once
 export default class Review extends React.Component {
   constructor(props) {
     super(props);
@@ -27,7 +28,9 @@ export default class Review extends React.Component {
         let snapObj = snapshot.val();
         let snapKeys = Object.keys(snapObj);
         let toInsert = {};
+
         if (this.props.active_player === "") {
+          // If no active_player, must be new game, so choose first player
           toInsert["active_player"] = snapKeys[0];
           toInsert["active_team"] = snapObj[snapKeys[0]].category;
         } else {
@@ -41,13 +44,15 @@ export default class Review extends React.Component {
               firstOnTeam[playerTeam - 1] = i;
             }
             // Next player on each team
+            // Checks (1) next player not already chosen (2) player is after the last player's index
             if (nextOnTeam[playerTeam - 1] === null && i > this.props.prev_player[playerTeam - 1]) {
               nextOnTeam[playerTeam - 1] = i;
             }
           }
-          let nextTeam = (this.props.active_team % 2) + 1
-
+          // Next team should always change
+          let nextTeam = (this.props.active_team % 2) + 1;
           let nextIndex;
+
           if (nextOnTeam[nextTeam - 1] !== null) {
             // If next player on next team exists, assign accordingly
             toInsert["active_player"] = snapKeys[nextOnTeam[nextTeam - 1]];
@@ -65,15 +70,18 @@ export default class Review extends React.Component {
             toInsert["active_player"] = snapKeys[firstOnTeam[this.props.active_team - 1]];
             nextIndex = firstOnTeam[this.props.active_team - 1];
           }
-          toInsert["active_team"] = (this.props.active_team % 2) + 1;
+
+          // Set the next active team and the chosen player as prev_player
+          toInsert["active_team"] = nextTeam;
           toInsert["prev_player/" + (snapObj[toInsert.active_player].category - 1)] = nextIndex;
         }
-
+        // Insert changes into Firebase database
         db.ref('/games/' + this.props.gameid).update(toInsert);
       });
     }
   }
 
+  // On round start, toggle review and reset guessed/discarded words
   startRound() {
     db.ref('/games/' + this.props.gameid).update({review: false, results: null});
   } 
@@ -90,30 +98,29 @@ export default class Review extends React.Component {
       role = "Watchdog";
     }
 
-    const nextLink = ((this.props.name === this.props.creator) ? <button type="submit" className="mainButton" onClick={this.startRound}>Start Round</button> : null);
+    // Link to start round only available for creator
+    const startLink = ((this.props.name === this.props.creator) ? <button type="submit" className="mainButton" onClick={this.startRound}>Start Round</button> : null);
 
     return(
       <div>
-        <div className="oneButtonBody">
-          <div className="players">
-            <h2 className="teamHeader">Team 1<br/>{this.props.scores.team1}</h2>
-            <h2 className="teamHeader">Team 2<br/>{this.props.scores.team2}</h2>
-          </div>
-          <hr />
-          <div className="reviewNext">
-            <h4>Next: Team {this.props.active_team} - {this.props.active_player}</h4>
-            <h4>You will be a {role}</h4>
-          </div>
-          <hr />
-          <div className="players">
-            <TeamList gameid={this.props.gameid} label={"guessed"} header="Guessed" data={this.props.results} toggle={false} />
-            <TeamList gameid={this.props.gameid} label={"discarded"} header="Discarded" data={this.props.results} toggle={false} />
-          </div>
+        <div className="players">
+          <h2 className="teamHeader">Team 1<br/>{this.props.scores.team1}</h2>
+          <h2 className="teamHeader">Team 2<br/>{this.props.scores.team2}</h2>
+        </div>
+        <hr />
+        <div className="reviewNext">
+          <h4>Next: Team {this.props.active_team} - {this.props.active_player}</h4>
+          <h4>You will be a {role}</h4>
+        </div>
+        <hr />
+        <div className="players">
+          <TeamList gameid={this.props.gameid} label={true} header="Guessed" data={this.props.results} toggle={false} />
+          <TeamList gameid={this.props.gameid} label={false} header="Discarded" data={this.props.results} toggle={false} />
         </div>
         <div className="footerButtons">
-        {nextLink}
+          {startLink}
         </div>
       </div>
-    )
+    );
   }
 }

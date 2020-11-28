@@ -1,7 +1,8 @@
 import db from '../Firebase';
 
+// Only used for names in waiting room
 export default function ListItem (props) {
-  // gameid={this.props.gameid} label={1} header="Team 1" data={this.state.players} toggle={true}
+  // Calculates other team number and sets this player to that new team
   function switchTeams() {
     let newTeam = (props.team % 2) + 1;
     db.ref('/games/' + props.gameid + '/players/' + props.name).set({category: newTeam});
@@ -9,5 +10,5 @@ export default function ListItem (props) {
 
   return (
     <li onClick={switchTeams}>{props.name}</li>
-    );
+  );
 }

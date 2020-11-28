@@ -1,6 +1,6 @@
 import { Navbar, Nav } from "react-bootstrap";
 
-export default function Navigation () {
+export default function Navigation() {
   return (
     <div>
       <Navbar className="topnav" variant="dark" expand="lg" fixed="top">
@@ -13,6 +13,6 @@ export default function Navigation () {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-      </div>
-  )
+    </div>
+  );
 }

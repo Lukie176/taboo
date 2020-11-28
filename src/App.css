@@ -22,15 +22,7 @@
 main {
   padding-top: 56px;
 }
-
-.oneButtonBody {
-  padding-bottom: 90px;
-}
-
-.twoButtonBody {
-  padding-bottom: 180px;
-}
-  
+ 
 h1, h2 {
   padding:15px;
 }
@@ -46,10 +38,6 @@ ul {
 hr {
   background-color: white;
   width:60%;
-}
-
-.twoButtonBody p {
-  padding: 5%;
 }
 
 .reviewNext h4 {
@@ -191,12 +179,12 @@ hr {
   width: 100%;
 }
 
-.icon-success{
+.icon-success {
   padding-left: 50px;
   background: url(./assets/check-solid.svg) no-repeat center;
 }
 
-.icon-danger{
+.icon-danger {
   background: url(./assets/times-solid.svg) no-repeat center;
 }
 
@@ -256,15 +244,19 @@ hr {
   z-index: 10;
 }
 
-.newGameDiv h1{
+.newGameDiv h1 {
   font-size: 60px;
 }
 
-.newGameDiv h2{
+.newGameDiv h2 {
   font-size: 40px;
 }
 
-.players{
+.newGameDiv p {
+ padding: 30px;
+}
+
+.players {
   margin:auto;
   border: none;
   display:inline-flex;
@@ -272,14 +264,14 @@ hr {
   width:90vw;
 }
 
-.players li{
+.players li {
   font-size: 30px;
   padding:0;
   margin:0;
   width:45vw;
   text-align:center;
 }
-.players h2{
+.players h2 {
   width:45vw;
   text-align:center;
 }

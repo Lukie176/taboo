@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function Timer(){
+export default function Timer() {
   // Define state variables for time left and whether countdown is active
   const [seconds, setSeconds] = useState(60);
   const [isActive, setIsActive] = useState(false);
@@ -15,7 +15,6 @@ export default function Timer(){
     setSeconds(60);
     setIsActive(false);
   }
-
 
   useEffect(() => {
     let interval = null;
@@ -32,12 +31,12 @@ export default function Timer(){
   return (
     <div className="time">
       <h3>{seconds}s</h3>
-      <button className={isActive ? 'btn timer btn-warning' : 'btn timer btn-success'} onClick={toggle}>
-        <span className={isActive ? 'icon icon-pause' : 'icon icon-start'}></span>
+      <button className={'btn timer btn-' + (isActive ? 'warning' : 'success')} onClick={toggle}>
+        <span className={'icon icon-' + (isActive ? 'pause' : 'start')}></span>
       </button>
       <button className="btn timer btn-danger" onClick={reset}>
         <span className="icon icon-reset"></span>
       </button> 
     </div>
   );
-};
+}

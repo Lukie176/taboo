@@ -13,38 +13,44 @@ export default class JoinGame extends React.Component {
       attempt: false,
       valid: false,
       joinCode: joinCode
-    }
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleJoin = this.handleJoin.bind(this);
+  }
+
+  // Updates joinCode state with input field value
+  handleChange(event) {
+    this.setState({joinCode: event.target.value.toUpperCase()});
+  }
+
+  // Validates join code and set state accordingly
+  handleJoin(event) {
+    db.ref('/games/' + this.state.joinCode).once('value', (snapshot) => {
+      // Checks (1) game exists (2) joinCode length (3) game has not started
+      if (snapshot.exists() && this.state.joinCode.length === 4 && (!("review" in snapshot.val()))) {
+        this.setState({valid: true});
+      } else if (this.state.joinCode.length > 0) {
+        // If code is non-empty, indicate invalid code
+        this.setState({attempt: true});
+      }
+      // Sets flag so a view renders
+      this.setState({fetching: false});
+    });
+
+    // If join request came from form submission, prevent HTTP request
+    if (event) {
+      event.preventDefault();
+    }
   }
 
   componentDidMount() {
     this.handleJoin();
   }
 
-  handleChange(event) {
-    this.setState({
-      joinCode: event.target.value.toUpperCase()
-    });
-  }
-
-  handleJoin(event) {
-    db.ref('/games/' + this.state.joinCode).once('value', (snapshot) => {
-      if (snapshot.exists() && this.state.joinCode.length === 4 && (!("review" in snapshot.val()))) {
-        this.setState({valid: true});
-      } else if (this.state.joinCode.length > 0) {
-        this.setState({attempt: true});
-      }
-      this.setState({fetching: false});
-    });
-
-    if (event)
-      event.preventDefault();
-  }
-
   componentDidUpdate(prevProps) {
     // Reset state if re-routed to JoinGame from Navigation
+    // (1) Prevent change if from same location (2) Navbar link does not pass any params
     if (this.props.location !== prevProps.location && !("joinCode" in this.props.match.params)) {
       let joinCode = (("joinCode" in this.props.match.params) ? this.props.match.params.joinCode : "");
       this.setState({
@@ -57,8 +63,10 @@ export default class JoinGame extends React.Component {
 
   render() {
     let attempted = ((this.state.attempt) ? <p>This Game Code is Invalid</p> : null);
+    // Sends user to next stage if joinCode is valid
     if (this.state.valid) {
       return (<Name page="join" gameid={this.state.joinCode} />);
+    // Otherwise if not checking code, render joinCode form
     } else if (!this.state.fetching) {
       return (
         <div className="content joinDiv">
@@ -84,9 +92,9 @@ export default class JoinGame extends React.Component {
           </form>
         </div>
       );
+    // Wait until initial code is checked to render anything
     } else {
-      return null
+      return (null);
     }
-    
   }
 }

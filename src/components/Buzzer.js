@@ -1,11 +1,13 @@
 import db from '../Firebase';
 
 export default function Button(props) {
+  // Function to turn buzzer off
   function restoreBuzzer() {
     db.ref('/games/' + props.game).update({buzzer: false});
   }
 
-  function logResponse(){
+  // Turn buzzer on, wait 3 seconds, then turn it off
+  function logResponse() {
     db.ref('/games/' + props.game).update({buzzer: true});
     setTimeout(restoreBuzzer, 3000);
   }
